@@ -1,4 +1,4 @@
-import { useAddress, useAuth, useMetamask } from "@thirdweb-dev/react";
+import { ConnectWallet, useAddress, useAuth, useMetamask } from "@thirdweb-dev/react";
 import type { NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -59,30 +59,9 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.stack}>
-          {!!session ? (
-            <button onClick={() => signOut()} className={styles.mainButton}>
-              Logout
-            </button>
-          ) : address ? (
-            <>
-              <button
-                onClick={() => signIn("google")}
-                className={styles.mainButton}
-              >
-                Login with Google
-              </button>
-              <button
-                onClick={() => loginWithWallet()}
-                className={styles.mainButton}
-              >
-                Login with Wallet
-              </button>
-            </>
-          ) : (
-            <button onClick={() => connect()} className={styles.mainButton}>
-              Connect Wallet
-            </button>
-          )}
+          <ConnectWallet auth={{
+            loginOptional: false,
+          }} />
           <button onClick={getSecret} className={styles.mainButton}>
             Get Secret
           </button>
